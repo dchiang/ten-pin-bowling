@@ -79,6 +79,9 @@ public class App {
 			case 2:
 				factory = new TwelveFramesBowlingFactory();
 				break;
+			case 3:
+				factory = new WorldBowlingFactory();
+				break;
 			default:
 				return null;
 		}
