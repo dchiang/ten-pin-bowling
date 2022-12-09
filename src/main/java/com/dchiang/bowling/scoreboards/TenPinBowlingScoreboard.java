@@ -1,0 +1,99 @@
+package com.dchiang.bowling.scoreboards;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.StringJoiner;
+
+import com.dchiang.bowling.player.BowlingPlayer;
+import com.dchiang.bowling.utils.ConsoleHandler;
+import com.dchiang.bowling.utils.FileHandler;
+import com.dchiang.bowling.utils.Validator;
+
+public abstract class TenPinBowlingScoreboard implements Scoreboard {
+
+    protected int framesNumber;
+    protected int maxRolls;
+    protected ArrayList<BowlingPlayer> players = new ArrayList<>();
+    protected LinkedHashMap<String, List<String>> scoreboard = new LinkedHashMap<>();
+
+    protected abstract BowlingPlayer createPlayer(String playerName, List<String> rolls) throws Exception;
+
+    protected String requestScoreFile() {
+        String scoresPath = null;
+        while (scoresPath == null) {
+            System.out.println("Enter the absolute path to the score file:");
+            try {
+                ConsoleHandler cli = ConsoleHandler.getInstance();
+                scoresPath = cli.readLine();
+                if (!FileHandler.fileExists(scoresPath)) {
+                    scoresPath = null;
+                    System.out.println("Not a valid file");
+                }
+            } catch (IOException e) {
+                System.out.println("Error reading the file "
+                        + e.getMessage() + " " + e.getClass().getName());
+            }
+        }
+        return scoresPath;
+    }
+
+    protected void loadScores(String scoresPath) throws Exception {
+        List<String[]> records;
+        try {
+            records = FileHandler.readFile(scoresPath, "\\t");
+            if (records != null && records.size() > 0) {
+                for (String[] record : records) {
+                    String playerName = record[0];
+                    String knockedDownPins = record[1];
+                    scoreboard.computeIfAbsent(playerName, k -> new ArrayList<>()).add(knockedDownPins);
+                }
+            } else {
+                throw new Exception("Empty score file");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void addPlayers() throws Exception {
+        for (HashMap.Entry<String, List<String>> set : scoreboard.entrySet()) {
+            String playerName = set.getKey();
+            List<String> rolls = set.getValue();
+            if (Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$")) {
+                if (rolls.size() > this.maxRolls) {
+                    throw new Exception("Extra score");
+                }
+                players.add(this.createPlayer(playerName, rolls));
+            }
+        }
+    }
+
+    private void printPlayerScore(BowlingPlayer player){
+        String playerScore = String.join("\n", player.getName(), player.getRollsString(), player.getScores());
+        System.out.println(playerScore);
+    }
+
+    public void printScoreboard() {
+        StringJoiner frames = new StringJoiner("\t\t");
+        frames.add("Frame");
+        for (int i = 1; i <= this.framesNumber; i++) {
+            frames.add(String.valueOf(i));
+        }
+        System.out.println(frames);
+        players.forEach((player) -> {
+            this.printPlayerScore(player);
+        });
+    }
+
+    public void execute() throws Exception {
+        while (this.scoreboard.size() == 0) {
+            String scoresPath = this.requestScoreFile();
+            this.loadScores(scoresPath);
+        }
+        this.addPlayers();
+        this.printScoreboard();
+    }
+}
