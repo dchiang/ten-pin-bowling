@@ -76,6 +76,9 @@ public class App {
 			case 1:
 				factory = new TenPinsTraditionalBowlingFactory();
 				break;
+			case 2:
+				factory = new TwelveFramesBowlingFactory();
+				break;
 			default:
 				return null;
 		}
