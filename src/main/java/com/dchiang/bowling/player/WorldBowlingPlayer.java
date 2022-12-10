@@ -8,7 +8,7 @@ import com.dchiang.bowling.exceptions.MissingFrameException;
 import com.dchiang.bowling.exceptions.ScoreValueException;
 import com.dchiang.bowling.utils.Validator;
 
-public class WorldBowlingPlayer extends TenPinBowlingPlayer{
+public class WorldBowlingPlayer extends TenPinBowlingPlayer {
 
     public WorldBowlingPlayer(String name, List<String> rolls) throws Exception {
         super(name, 10, rolls);
@@ -40,7 +40,7 @@ public class WorldBowlingPlayer extends TenPinBowlingPlayer{
         int frameIndex = 1;
         for (int i = 0; i < rolls.size(); i++) {
             rollIndex++;
-            if (rollIndex == 3) {
+            if (rollIndex == 2 && frameIndex == this.framesNumber && this.isStrike(i - 1)) {
                 throw new ExtraScoreException();
             }
             if (Validator.hasValidFormat(rolls.get(i), "^([0-9]|10|F){1}$")) {
@@ -61,11 +61,11 @@ public class WorldBowlingPlayer extends TenPinBowlingPlayer{
                     }
                 }
             } else {
-                throw new ScoreValueException(rolls.get(i),(i+1));
+                throw new ScoreValueException(rolls.get(i), (i + 1));
             }
         }
         if (frameIndex < this.framesNumber) {
-            throw new MissingFrameException(frameIndex);
+            throw new MissingFrameException(frameIndex - 1);
         }
     }
 }
