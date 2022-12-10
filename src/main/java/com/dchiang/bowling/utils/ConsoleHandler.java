@@ -27,6 +27,8 @@ public final class ConsoleHandler {
     }
 
     public void closeReader() throws IOException {
-        this.reader.close();
+        if (this.reader != null) {
+            this.reader.close();
+        }
     }
 }

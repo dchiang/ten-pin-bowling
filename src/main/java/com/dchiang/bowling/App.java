@@ -5,6 +5,7 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.dchiang.bowling.app.Game;
+import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.factories.*;
 import com.dchiang.bowling.utils.*;
 
@@ -94,8 +95,9 @@ public class App {
 		if (game != null) {
 			try {
 				game.execute();
+			} catch (FileContentException e) {
+				System.out.println(e.toString());
 			} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
