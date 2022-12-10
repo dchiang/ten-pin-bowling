@@ -13,18 +13,25 @@ import java.io.FileReader;
 public class FileHandler {
 
     public static List<String[]> readFile(Object t, String separator) throws IOException {
-        List<String[]> records;
-        BufferedReader reader;
-        if (t instanceof String) {
-            reader = new BufferedReader(new FileReader((String) t));
-        } else if (t instanceof InputStream) {
-            reader = new BufferedReader(new InputStreamReader((InputStream) t));
-        } else {
-            return null;
+        List<String[]> records = null;
+        BufferedReader reader = null;
+        try {
+            if (t instanceof String) {
+                reader = new BufferedReader(new FileReader((String) t));
+            } else if (t instanceof InputStream) {
+                reader = new BufferedReader(new InputStreamReader((InputStream) t));
+            } else {
+                return null;
+            }
+            Stream<String> input = reader.lines();
+            records = input.map(x -> x.split(separator)).collect(Collectors.toList());
+        } catch (IOException e) {
+            e.printStackTrace();
+        } finally {
+            if (reader != null) {
+                reader.close();
+            }
         }
-        Stream<String> input = reader.lines();
-        records = input.map(x -> x.split(separator)).collect(Collectors.toList());
-        reader.close();
         return records;
     }
 

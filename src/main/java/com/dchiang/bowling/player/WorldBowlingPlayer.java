@@ -2,6 +2,10 @@ package com.dchiang.bowling.player;
 
 import java.util.List;
 
+import com.dchiang.bowling.exceptions.ExtraScoreException;
+import com.dchiang.bowling.exceptions.InvalidFrameException;
+import com.dchiang.bowling.exceptions.MissingFrameException;
+import com.dchiang.bowling.exceptions.ScoreValueException;
 import com.dchiang.bowling.utils.Validator;
 
 public class WorldBowlingPlayer extends TenPinBowlingPlayer{
@@ -37,7 +41,7 @@ public class WorldBowlingPlayer extends TenPinBowlingPlayer{
         for (int i = 0; i < rolls.size(); i++) {
             rollIndex++;
             if (rollIndex == 3) {
-                throw new Exception("Extra score");
+                throw new ExtraScoreException();
             }
             if (Validator.hasValidFormat(rolls.get(i), "^([0-9]|10|F){1}$")) {
                 Integer score = rolls.get(i).equals("F") ? 0 : Integer.valueOf(rolls.get(i));
@@ -49,7 +53,7 @@ public class WorldBowlingPlayer extends TenPinBowlingPlayer{
                 } else if (rollIndex == 2) {
                     int frameSum = this.sumOfBallsInFrame(i - 1);
                     if (frameSum > 10 && frameIndex < this.framesNumber) {
-                        throw new Exception("Invalid frame sum, total: " + frameSum);
+                        throw new InvalidFrameException(frameIndex, frameSum);
                     }
                     if (frameIndex < this.framesNumber) {
                         rollIndex = 0;
@@ -57,11 +61,11 @@ public class WorldBowlingPlayer extends TenPinBowlingPlayer{
                     }
                 }
             } else {
-                throw new Exception("Invalid score");
+                throw new ScoreValueException(rolls.get(i),(i+1));
             }
         }
         if (frameIndex < this.framesNumber) {
-            throw new Exception("Frames are missing, only found "+(frameIndex-1));
+            throw new MissingFrameException(frameIndex);
         }
     }
 }

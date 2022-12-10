@@ -7,6 +7,8 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.StringJoiner;
 
+import com.dchiang.bowling.exceptions.ExtraScoreException;
+import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.player.BowlingPlayer;
 import com.dchiang.bowling.utils.ConsoleHandler;
 import com.dchiang.bowling.utils.FileHandler;
@@ -42,22 +44,18 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     protected void loadScores(String scoresPath) throws Exception {
         List<String[]> records;
-        try {
-            records = FileHandler.readFile(scoresPath, "\\t");
-            if (records != null && records.size() > 0) {
-                for (String[] record : records) {
-                    if(record.length!=2){
-                        throw new Exception("Invalid score file");
-                    }
-                    String playerName = record[0];
-                    String knockedDownPins = record[1];
-                    scoreboard.computeIfAbsent(playerName, k -> new ArrayList<>()).add(knockedDownPins);
+        records = FileHandler.readFile(scoresPath, "\\t");
+        if (records != null && records.size() > 0) {
+            for (String[] record : records) {
+                if (record.length != 2) {
+                    throw new FileContentException("Invalid score file, missing column");
                 }
-            } else {
-                throw new Exception("Empty score file");
+                String playerName = record[0];
+                String knockedDownPins = record[1];
+                scoreboard.computeIfAbsent(playerName, k -> new ArrayList<>()).add(knockedDownPins);
             }
-        } catch (IOException e) {
-            e.printStackTrace();
+        } else {
+            throw new FileContentException("Empty score file");
         }
     }
 
@@ -67,14 +65,16 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
             List<String> rolls = set.getValue();
             if (Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$")) {
                 if (rolls.size() > this.maxRolls) {
-                    throw new Exception("Extra score");
+                    throw new ExtraScoreException();
                 }
                 players.add(this.createPlayer(playerName, rolls));
+            } else {
+                throw new FileContentException("Invalid player name, found "+playerName);
             }
         }
     }
 
-    private void printPlayerScore(BowlingPlayer player){
+    private void printPlayerScore(BowlingPlayer player) {
         String playerScore = String.join("\n", player.getName(), player.getRollsString(), player.getScores());
         System.out.println(playerScore);
     }
