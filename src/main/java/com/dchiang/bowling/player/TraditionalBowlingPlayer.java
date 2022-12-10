@@ -30,10 +30,9 @@ public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
         int frameIndex = 1;
         for (int i = 0; i < rolls.size(); i++) {
             rollIndex++;
-            System.out.println("rollIndex:" + rollIndex + " frameIndex:" + frameIndex + " i:" + i);
             if (rollIndex == 3 && !this.isStrike(i - 2) && !this.isSpare(i - 2)) {
                 throw new ExtraScoreException();
-            } else if (rollIndex > 3){
+            } else if (rollIndex > 3) {
                 throw new ExtraScoreException();
             }
             if (Validator.hasValidFormat(rolls.get(i), "^([0-9]|10|F){1}$")) {
@@ -54,11 +53,11 @@ public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
                     }
                 }
             } else {
-                throw new ScoreValueException(rolls.get(i),(i+1));
+                throw new ScoreValueException(rolls.get(i), (i + 1));
             }
         }
         if (frameIndex < this.framesNumber) {
-            throw new MissingFrameException(frameIndex);
+            throw new MissingFrameException(frameIndex - 1);
         }
     }
 }
