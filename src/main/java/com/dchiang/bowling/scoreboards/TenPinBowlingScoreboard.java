@@ -46,6 +46,9 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
             records = FileHandler.readFile(scoresPath, "\\t");
             if (records != null && records.size() > 0) {
                 for (String[] record : records) {
+                    if(record.length!=2){
+                        throw new Exception("Invalid score file");
+                    }
                     String playerName = record[0];
                     String knockedDownPins = record[1];
                     scoreboard.computeIfAbsent(playerName, k -> new ArrayList<>()).add(knockedDownPins);
