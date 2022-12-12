@@ -14,6 +14,6 @@ public class TwelveFramesBowlingScoreboard extends TenPinBowlingScoreboard {
 
     @Override
     protected BowlingPlayer createPlayer(String playerName, List<String> rolls) throws Exception {
-        return new TwelveFrameBowlingPlayer(playerName,rolls);
+        return new TwelveFrameBowlingPlayer(playerName, rolls);
     }
 }

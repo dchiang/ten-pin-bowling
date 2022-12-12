@@ -6,8 +6,12 @@ import java.util.List;
 
 import com.dchiang.bowling.app.Game;
 import com.dchiang.bowling.exceptions.FileContentException;
-import com.dchiang.bowling.factories.*;
-import com.dchiang.bowling.utils.*;
+import com.dchiang.bowling.factories.GamesFactory;
+import com.dchiang.bowling.factories.TenPinsTraditionalBowlingFactory;
+import com.dchiang.bowling.factories.TwelveFramesBowlingFactory;
+import com.dchiang.bowling.factories.WorldBowlingFactory;
+import com.dchiang.bowling.utils.ConsoleHandler;
+import com.dchiang.bowling.utils.FileHandler;
 
 public class App {
 
@@ -69,10 +73,10 @@ public class App {
 		return selection;
 	}
 
-	private static Game configureGame() {
+	private static Game configureGame(Integer gameSelection, String scoreFile) {
 		Game game;
 		GamesFactory factory;
-		int selectedGame = selectGame();
+		int selectedGame = gameSelection != null ? gameSelection : selectGame();
 		switch (selectedGame) {
 			case 1:
 				factory = new TenPinsTraditionalBowlingFactory();
@@ -91,10 +95,12 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		Game game = configureGame();
+		Integer gameSelection = args.length > 0 ? Integer.valueOf(args[0]) : null;
+		String scoreFile = args.length > 1 ? args[1] : null;
+		Game game = configureGame(gameSelection, scoreFile);
 		if (game != null) {
 			try {
-				game.execute();
+				game.execute(scoreFile);
 			} catch (FileContentException e) {
 				System.out.println(e.toString());
 			} catch (Exception e) {
@@ -108,6 +114,5 @@ public class App {
 			System.out.println("Error closing the cli reader "
 					+ e.getMessage() + " " + e.getClass().getName());
 		}
-		System.exit(0);
 	}
 }
