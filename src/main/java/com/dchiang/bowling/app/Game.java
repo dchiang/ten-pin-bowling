@@ -11,7 +11,7 @@ public class Game {
         this.scoreboard = factory.createScoreboard();
     }
 
-    public void execute() throws Exception{
-        this.scoreboard.execute();
+    public void execute(String scoreFile) throws Exception {
+        this.scoreboard.execute(scoreFile);
     }
 }

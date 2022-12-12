@@ -69,7 +69,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
                 }
                 players.add(this.createPlayer(playerName, rolls));
             } else {
-                throw new FileContentException("Invalid player name, found "+playerName);
+                throw new FileContentException("Invalid player name, found " + playerName);
             }
         }
     }
@@ -91,10 +91,14 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         });
     }
 
-    public void execute() throws Exception {
-        while (this.scoreboard.size() == 0) {
-            String scoresPath = this.requestScoreFile();
-            this.loadScores(scoresPath);
+    public void execute(String scoreFile) throws Exception {
+        if (scoreFile == null) {
+            while (this.scoreboard.size() == 0) {
+                String scoresPath = this.requestScoreFile();
+                this.loadScores(scoresPath);
+            }
+        } else {
+            this.loadScores(scoreFile);
         }
         this.addPlayers();
         this.printScoreboard();
