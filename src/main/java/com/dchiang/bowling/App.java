@@ -43,8 +43,7 @@ public class App {
 	private static Integer getGameSelection() {
 		Integer selection = null;
 		try {
-			ConsoleHandler cli = ConsoleHandler.getInstance();
-			selection = Integer.valueOf(cli.readLine());
+			selection = Integer.valueOf(ConsoleHandler.readLine());
 		} catch (NumberFormatException e) {
 			System.out.println("Not a valid input: " + selection
 					+ ", enter a valid option (0 to exit)");
@@ -106,13 +105,6 @@ public class App {
 			} catch (Exception e) {
 				e.printStackTrace();
 			}
-		}
-		ConsoleHandler cli = ConsoleHandler.getInstance();
-		try {
-			cli.closeReader();
-		} catch (IOException e) {
-			System.out.println("Error closing the cli reader "
-					+ e.getMessage() + " " + e.getClass().getName());
 		}
 	}
 }
