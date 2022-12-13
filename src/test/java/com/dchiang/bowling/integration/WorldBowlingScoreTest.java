@@ -37,7 +37,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void twoPlayersWorldBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/scores-world.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/scores-world.txt";
         String scoreboard = "Jeff\n"
                 + "Pinfalls\t\tX\t7\t/\t9\t0\t\tX\t0\t8\t8\t/\tF\t6\t\tX\t\tX\t\tX\n"
                 + "Score\t\t30\t\t47\t\t56\t\t86\t\t94\t\t112\t\t118\t\t148\t\t178\t\t208\n"
@@ -49,7 +49,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void perfectWorldBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/perfect-world.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/perfect-world.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\n"
                 + "Score\t\t30\t\t60\t\t90\t\t120\t\t150\t\t180\t\t210\t\t240\t\t270\t\t300\n";
@@ -59,7 +59,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void all0WorldBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/all0.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/all0.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
@@ -68,7 +68,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void allFWorldBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/allF.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
@@ -77,7 +77,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void twoPlayersWorldBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/scores-world.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/scores-world.txt";
         String scoreboard = "Jeff\n"
                 + "Pinfalls\t\tX\t7\t/\t9\t0\t\tX\t0\t8\t8\t/\tF\t6\t\tX\t\tX\t\tX\n"
                 + "Score\t\t30\t\t47\t\t56\t\t86\t\t94\t\t112\t\t118\t\t148\t\t178\t\t208\n"
@@ -89,7 +89,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void perfectWorldBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/perfect-world.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/perfect-world.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\n"
                 + "Score\t\t30\t\t60\t\t90\t\t120\t\t150\t\t180\t\t210\t\t240\t\t270\t\t300\n";
@@ -98,7 +98,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void all0WorldBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/all0.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/all0.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
@@ -107,7 +107,7 @@ public class WorldBowlingScoreTest {
 
     @Test
     public void allFWorldBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/allF.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";

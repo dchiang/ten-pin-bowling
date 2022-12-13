@@ -35,7 +35,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void twoPlayersTwelveFrameBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/scores-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/scores-12.txt";
         String scoreboard = "Jeff\n"
                 + "Pinfalls\t\tX\t7\t/\t9\t0\t\tX\t0\t8\t8\t/\tF\t6\t\tX\t\tX\t\tX\t8\t1\t\tX\n"
                 + "Score\t\t30\t\t17\t\t9\t\t30\t\t8\t\t18\t\t6\t\t30\t\t30\t\t30\t\t9\t\t30\n"
@@ -47,7 +47,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void perfectTwelveFrameBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/perfect-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/perfect-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\n"
                 + "Score\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\n";
@@ -57,7 +57,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void all0TwelveFrameBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/all0-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/all0-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
@@ -66,7 +66,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void allFTwelveFrameBowlingPositiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/allF-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
@@ -75,7 +75,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void twoPlayersTwelveFrameBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/scores-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/scores-12.txt";
         String scoreboard = "Jeff\n"
                 + "Pinfalls\t\tX\t7\t/\t9\t0\t\tX\t0\t8\t8\t/\tF\t6\t\tX\t\tX\t\tX\t8\t1\t\tX\n"
                 + "Score\t\t30\t\t17\t\t9\t\t30\t\t8\t\t18\t\t6\t\t30\t\t30\t\t30\t\t9\t\t30\n"
@@ -87,7 +87,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void perfectTwelveFrameBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/perfect-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/perfect-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\t\tX\n"
                 + "Score\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\t\t30\n";
@@ -96,7 +96,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void all0TwelveFrameBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/all0-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/all0-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\t0\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
@@ -105,7 +105,7 @@ public class TwelveFrameBowlingTest {
 
     @Test
     public void allFTwelveFrameBowlingPositiveInteractiveInput() {
-        String scoreFile = AppTest.resourcesPath + "/positive/allF-12.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
