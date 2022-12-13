@@ -28,8 +28,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         while (scoresPath == null) {
             System.out.println("Enter the absolute path to the score file:");
             try {
-                ConsoleHandler cli = ConsoleHandler.getInstance();
-                scoresPath = cli.readLine();
+                scoresPath = ConsoleHandler.readLine();
                 if (!FileHandler.fileExists(scoresPath)) {
                     scoresPath = null;
                     System.out.println("Not a valid file");
