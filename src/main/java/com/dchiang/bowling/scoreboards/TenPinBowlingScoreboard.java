@@ -58,7 +58,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         }
     }
 
-    public void addPlayers() throws Exception {
+    private void addPlayers() throws Exception {
         for (HashMap.Entry<String, List<String>> set : scoreboard.entrySet()) {
             String playerName = set.getKey();
             List<String> rolls = set.getValue();
@@ -78,7 +78,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         System.out.println(playerScore);
     }
 
-    public void printScoreboard() {
+    private void printScoreboard() {
         StringJoiner frames = new StringJoiner("\t\t");
         frames.add("Frame");
         for (int i = 1; i <= this.framesNumber; i++) {
