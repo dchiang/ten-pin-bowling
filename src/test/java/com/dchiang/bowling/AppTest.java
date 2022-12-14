@@ -1,10 +1,23 @@
 package com.dchiang.bowling;
 
+import static org.junit.Assert.assertEquals;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AppTest {
+import org.junit.Rule;
+import org.junit.Test;
+import org.junit.contrib.java.lang.system.SystemOutRule;
+import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
+
+public class AppTest extends App {
+
+    @Rule
+    public final SystemOutRule systemOutRule = new SystemOutRule().enableLog();
+
+    @Rule
+    public final TextFromStandardInputStream systemInMock = TextFromStandardInputStream.emptyStandardInputStream();
 
     public static final String gameMenu = "Type the number of the game you would like to play (0 to exit):\n"
             + "1 -> Traditional Ten Frames Bowling\n"
@@ -36,4 +49,14 @@ public class AppTest {
         records.add(new String[] { "3", "World Bowling" });
         return records;
     }
+
+    @Test
+    public void exitGameTraditionalBowlingPositiveInteractiveInput() {
+        String gameSelectionToExit = "0";
+        String expectedOutput = AppTest.gameMenu + "Exiting...\n";
+        systemInMock.provideLines(gameSelectionToExit);
+        App.main(new String[] {});
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
 }

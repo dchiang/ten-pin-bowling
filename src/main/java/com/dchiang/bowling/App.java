@@ -5,7 +5,6 @@ import java.util.HashMap;
 import java.util.List;
 
 import com.dchiang.bowling.app.Game;
-import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.factories.GamesFactory;
 import com.dchiang.bowling.factories.TenPinsTraditionalBowlingFactory;
 import com.dchiang.bowling.factories.TwelveFramesBowlingFactory;
@@ -26,35 +25,29 @@ public class App {
 		List<String[]> records = null;
 		String filename = "/games.txt";
 		HashMap<Integer, String> gamesMenuOptions = new HashMap<>();
-		try {
-			records = FileHandler.readFile(App.class.getResourceAsStream(filename), "\\t");
-			if (records != null) {
-				records.stream().forEach((menuOption) -> {
-					gamesMenuOptions.put(Integer.valueOf(menuOption[0]), menuOption[1]);
-				});
-			}
-		} catch (IOException e) {
-			System.out.println("Error loading file " + filename + " "
-					+ e.getMessage() + " " + e.getClass().getName());
+		records = FileHandler.readFile(App.class.getResourceAsStream(filename), "\\t");
+		if (records != null) {
+			records.stream().forEach((menuOption) -> {
+				gamesMenuOptions.put(Integer.valueOf(menuOption[0]), menuOption[1]);
+			});
 		}
 		return gamesMenuOptions;
 	}
 
-	private static Integer getGameSelection() {
+	private static Integer getGameSelection() throws IOException {
 		Integer selection = null;
+		String input = null;
 		try {
-			selection = Integer.valueOf(ConsoleHandler.readLine());
+			input = ConsoleHandler.readLine();
+			selection = Integer.valueOf(input);
 		} catch (NumberFormatException e) {
-			System.out.println("Not a valid input: " + selection
-					+ ", enter a valid option (0 to exit)");
-		} catch (IOException e) {
-			System.out.println("Error reading the console "
-					+ e.getMessage() + " " + e.getClass().getName());
+			System.out.println("Not a valid input: \"" + input
+					+ "\", enter a valid option (0 to exit)");
 		}
 		return selection;
 	}
 
-	private static Integer selectGame() {
+	private static Integer selectGame() throws IOException {
 		Integer selection = null;
 		HashMap<Integer, String> gamesMenuOptions = getGamesMenuOptions();
 		if (gamesMenuOptions != null) {
@@ -63,8 +56,8 @@ public class App {
 				selection = getGameSelection();
 				if (selection != null && selection != 0
 						&& !gamesMenuOptions.containsKey(selection)) {
-					System.out.println("Not a valid input: " + selection
-							+ ", enter a valid option (0 to exit)");
+					System.out.println("Not a valid input: \"" + selection
+							+ "\", enter a valid option (0 to exit)");
 					selection = null;
 				}
 			}
@@ -72,7 +65,7 @@ public class App {
 		return selection;
 	}
 
-	private static Game configureGame(Integer gameSelection, String scoreFile) {
+	private static Game configureGame(Integer gameSelection, String scoreFile) throws IOException {
 		Game game;
 		GamesFactory factory;
 		int selectedGame = gameSelection != null ? gameSelection : selectGame();
@@ -96,15 +89,16 @@ public class App {
 	public static void main(String[] args) {
 		Integer gameSelection = args.length > 0 ? Integer.valueOf(args[0]) : null;
 		String scoreFile = args.length > 1 ? args[1] : null;
-		Game game = configureGame(gameSelection, scoreFile);
-		if (game != null) {
-			try {
+		try {
+
+			Game game = configureGame(gameSelection, scoreFile);
+			if (game != null) {
 				game.execute(scoreFile);
-			} catch (FileContentException e) {
-				System.out.println(e.toString());
-			} catch (Exception e) {
-				e.printStackTrace();
+			} else {
+				System.out.println("Exiting...");
 			}
+		} catch (Exception e) {
+			System.out.println(e.toString());
 		}
 	}
 }

@@ -23,19 +23,14 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     protected abstract BowlingPlayer createPlayer(String playerName, List<String> rolls) throws Exception;
 
-    protected String requestScoreFile() {
+    protected String requestScoreFile() throws IOException {
         String scoresPath = null;
         while (scoresPath == null) {
             System.out.println("Enter the absolute path to the score file:");
-            try {
-                scoresPath = ConsoleHandler.readLine();
-                if (!FileHandler.fileExists(scoresPath)) {
-                    scoresPath = null;
-                    System.out.println("Not a valid file");
-                }
-            } catch (IOException e) {
-                System.out.println("Error reading the file "
-                        + e.getMessage() + " " + e.getClass().getName());
+            scoresPath = ConsoleHandler.readLine();
+            if (!FileHandler.fileExists(scoresPath)) {
+                scoresPath = null;
+                System.out.println("Not a valid file");
             }
         }
         return scoresPath;
