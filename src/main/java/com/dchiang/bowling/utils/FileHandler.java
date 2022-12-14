@@ -12,7 +12,7 @@ import java.io.FileReader;
 
 public class FileHandler {
 
-    public static List<String[]> readFile(Object t, String separator) throws IOException {
+    public static List<String[]> readFile(Object t, String separator) {
         List<String[]> records = null;
         BufferedReader reader = null;
         try {
@@ -25,12 +25,9 @@ public class FileHandler {
             }
             Stream<String> input = reader.lines();
             records = input.map(x -> x.split(separator)).collect(Collectors.toList());
+            reader.close();
         } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            if (reader != null) {
-                reader.close();
-            }
+            System.out.println(e.getClass().getSimpleName() + " Error loading file " + e.getMessage());
         }
         return records;
     }

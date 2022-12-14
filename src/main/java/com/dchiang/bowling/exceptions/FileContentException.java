@@ -7,6 +7,6 @@ public class FileContentException extends Exception {
     }
 
     public String toString() {
-        return this.getClass().getName() + " " + this.getMessage();
+        return this.getClass().getSimpleName()+ " " + this.getMessage();
     }
 }

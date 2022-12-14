@@ -1,37 +1,21 @@
 package com.dchiang.bowling.unit;
 
 import static org.junit.Assert.assertArrayEquals;
-import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
-import org.junit.FixMethodOrder;
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.contrib.java.lang.system.TextFromStandardInputStream;
-import org.junit.runners.MethodSorters;
 
 import com.dchiang.bowling.AppTest;
-import com.dchiang.bowling.utils.ConsoleHandler;
 import com.dchiang.bowling.utils.FileHandler;
-import com.dchiang.bowling.utils.Validator;
 
-@FixMethodOrder(MethodSorters.DEFAULT)
-public class UtilsTest {
+public class FileHandlerTest extends FileHandler {
 
-    @Rule
-    public final TextFromStandardInputStream systemInMock = TextFromStandardInputStream.emptyStandardInputStream();
-
-    @Test
-    public void readConsoleLine() throws IOException {
-        String input = "Hello World!";
-        systemInMock.provideLines(input);
-        String line = ConsoleHandler.readLine();
-        assertEquals(input, line);
-    }
 
     @Test
     public void fileExist() {
@@ -43,6 +27,17 @@ public class UtilsTest {
     public void fileDontExist() {
         String scoreFile = AppTest.testResourcesPath + "/positive/dummy-name.txt";
         assertFalse(FileHandler.fileExists(scoreFile));
+    }
+
+    @Test
+    public void unsupportedReaderObject() throws IOException {
+        assertNull(FileHandler.readFile(new ArrayList<>(), "\\t"));
+    }
+
+    @Test
+    public void fileNotFoundHandled() throws IOException{
+        String filename = "dummy text";
+        assertNull(FileHandler.readFile(filename, "\\t"));
     }
 
     @Test
@@ -67,17 +62,5 @@ public class UtilsTest {
             records.get(i);
             assertArrayEquals(records.get(i), expectedRecords.get(i));
         }
-    }
-
-    @Test
-    public void hasValidFormatStringTrueResult() {
-        String playerName = "Carl";
-        assertTrue(Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$"));
-    }
-
-    @Test
-    public void hasValidFormatStringFalseResult() {
-        String playerName = "Carl.";
-        assertFalse(Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$"));
     }
 }

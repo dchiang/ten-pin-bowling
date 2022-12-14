@@ -65,7 +65,7 @@ public class TwelveFrameBowlingTest {
     }
 
     @Test
-    public void allFTwelveFrameBowlingPositiveInput() {
+    public void allF_TwelveFrameBowlingPositiveInput() {
         String scoreFile = AppTest.testResourcesPath + "/positive/allF-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
@@ -104,11 +104,91 @@ public class TwelveFrameBowlingTest {
     }
 
     @Test
-    public void allFTwelveFrameBowlingPositiveInteractiveInput() {
+    public void allF_TwelveFrameBowlingPositiveInteractiveInput() {
         String scoreFile = AppTest.testResourcesPath + "/positive/allF-12.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
         testAppMainInteractiveInput(scoreFile, scoreboard);
+    }
+
+    @Test
+    public void extraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void all0ExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/all0-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void allF_ExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/allF-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void perfectExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/perfect-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void empty() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/empty.txt";
+        String expectedOutput = "FileContentException Empty score file\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void freeText() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/free-text.txt";
+        String expectedOutput = "FileContentException Invalid score file, missing column\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/invalid-score.txt";
+        String expectedOutput = "ScoreValueException Invalid score, found lorem at line 2\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void missingRolls() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/missing-rolls.txt";
+        String expectedOutput = "MissingFrameException Frames are missing: 8 frames found\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void negative() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/negative.txt";
+        String expectedOutput = "ScoreValueException Invalid score, found -5 at line 2\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidFrame() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/invalid-frame.txt";
+        String expectedOutput = "InvalidFrameException Invalid frame sum at frame 2, total: 11\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
     }
 }

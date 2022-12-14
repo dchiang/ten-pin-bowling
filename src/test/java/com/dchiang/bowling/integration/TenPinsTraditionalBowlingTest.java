@@ -64,7 +64,7 @@ public class TenPinsTraditionalBowlingTest {
     }
 
     @Test
-    public void allFTraditionalBowlingPositiveInput() {
+    public void allF_TraditionalBowlingPositiveInput() {
         String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
@@ -103,12 +103,160 @@ public class TenPinsTraditionalBowlingTest {
     }
 
     @Test
-    public void allFTraditionalBowlingPositiveInteractiveInput() {
+    public void allF_TraditionalBowlingPositiveInteractiveInput() {
         String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
         String scoreboard = "Carl\n"
                 + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
                 + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
 
         testAppMainInteractiveInput(scoreFile, scoreboard);
+    }
+
+    @Test
+    public void requestValidFileTraditionalBowlingPositiveInteractiveInput() {
+        String invalidFile = AppTest.testResourcesPath + "/positive/dummy-file-name.txt";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
+        String scoreboard = "Carl\n"
+                + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
+                + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
+        String expectedOutput = AppTest.gameMenu + AppTest.fileAsk
+                + "Not a valid file\n"
+                + "Enter the absolute path to the score file:\n"
+                + AppTest.tenFrames + scoreboard;
+        systemInMock.provideLines(gameSelection, invalidFile, scoreFile);
+        App.main(new String[] {});
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidInputForGameSelectionTraditionalBowlingPositiveInteractiveInput() {
+        String invalidGameSelection = "dummy string";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
+        String scoreboard = "Carl\n"
+                + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
+                + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
+        String expectedOutput = AppTest.gameMenu
+                + "Not a valid input: \""
+                + invalidGameSelection
+                + "\", enter a valid option (0 to exit)\n"
+                + AppTest.fileAsk
+                + AppTest.tenFrames + scoreboard;
+        systemInMock.provideLines(invalidGameSelection, gameSelection, scoreFile);
+        App.main(new String[] {});
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidValueForGameSelectionTraditionalBowlingPositiveInteractiveInput() {
+        String invalidGameSelection = "-1";
+        String scoreFile = AppTest.testResourcesPath + "/positive/allF.txt";
+        String scoreboard = "Carl\n"
+                + "Pinfalls\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\tF\n"
+                + "Score\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\t\t0\n";
+        String expectedOutput = AppTest.gameMenu
+                + "Not a valid input: \""
+                + invalidGameSelection
+                + "\", enter a valid option (0 to exit)\n"
+                + AppTest.fileAsk
+                + AppTest.tenFrames + scoreboard;
+        systemInMock.provideLines(invalidGameSelection, gameSelection, scoreFile);
+        App.main(new String[] {});
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void extraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void all0ExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/all0-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void allF_ExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/allF-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void noBonusRollExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/no-bonus-roll-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void perfectExtraScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/perfect-extra-score.txt";
+        String expectedOutput = "ExtraScoreException Extra Score\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void empty() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/empty.txt";
+        String expectedOutput = "FileContentException Empty score file\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void freeText() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/free-text.txt";
+        String expectedOutput = "FileContentException Invalid score file, missing column\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidScore() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/invalid-score.txt";
+        String expectedOutput = "ScoreValueException Invalid score, found lorem at line 2\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void missingRolls() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/missing-rolls.txt";
+        String expectedOutput = "MissingFrameException Frames are missing: 8 frames found\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void negative() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/negative.txt";
+        String expectedOutput = "ScoreValueException Invalid score, found -5 at line 2\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidFrame() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/invalid-frame.txt";
+        String expectedOutput = "InvalidFrameException Invalid frame sum at frame 2, total: 11\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void invalidPlayerName() {
+        String scoreFile = AppTest.testResourcesPath + "/negative/invalid-player-name.txt";
+        String expectedOutput = "FileContentException Invalid player name, found @Carl\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
     }
 }
