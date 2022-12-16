@@ -13,7 +13,7 @@ import org.junit.runners.MethodSorters;
 import com.dchiang.bowling.utils.ConsoleHandler;
 
 @FixMethodOrder(MethodSorters.DEFAULT)
-public class ConsoleHandlerTest extends ConsoleHandler{
+public class ConsoleHandlerTest {
 
     @Rule
     public final TextFromStandardInputStream systemInMock = TextFromStandardInputStream.emptyStandardInputStream();

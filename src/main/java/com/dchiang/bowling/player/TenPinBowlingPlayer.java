@@ -1,19 +1,28 @@
 package com.dchiang.bowling.player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.StringJoiner;
+
+import com.dchiang.bowling.exceptions.FileContentException;
+import com.dchiang.bowling.exceptions.InvalidFrameException;
+import com.dchiang.bowling.exceptions.MissingFrameException;
 
 public abstract class TenPinBowlingPlayer implements BowlingPlayer {
     protected String name;
     protected List<Integer> rolls;
     protected StringJoiner rollsString;
     protected int framesNumber;
+    protected boolean accumulateScoreAmongFrames;
 
-    protected TenPinBowlingPlayer(String name, int frameNumbers, List<String> rolls) throws Exception {
+    protected TenPinBowlingPlayer(String name, int frameNumbers, List<String> rolls, boolean accumulateScoreAmongFrames)
+            throws FileContentException {
         this.name = name;
         this.rolls = new ArrayList<>();
         this.framesNumber = frameNumbers;
         rollsString = new StringJoiner("\t");
         rollsString.add("Pinfalls");
+        this.accumulateScoreAmongFrames = accumulateScoreAmongFrames;
         this.processRolls(rolls);
     }
 
@@ -21,7 +30,7 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
 
     protected abstract int strikeBonus(int frameIndex);
 
-    protected abstract void processRolls(List<String> rolls) throws Exception;
+    protected abstract void processRolls(List<String> rolls) throws FileContentException;
 
     public String getName() {
         return this.name;
@@ -29,15 +38,6 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
 
     public String getRollsString() {
         return rollsString.toString();
-    }
-
-    protected String getRollStringRepresentation(List<String> rolls, int score, int frameIndex, int rollIndexInFrame,
-            int rollIndex) {
-        return rolls.get(rollIndex).equals("F") ? "F"
-                : (score == 10 && frameIndex >= this.framesNumber ? "X"
-                        : (score == 10 ? "\tX"
-                                : (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == 10 ? "/"
-                                        : String.valueOf(score))));
     }
 
     protected boolean isStrike(int frameIndex) {
@@ -52,12 +52,37 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
         return rolls.get(frameIndex) + rolls.get(frameIndex + 1) == 10;
     }
 
+    protected void validateFrameSum(int frameIndex, int iteration) throws InvalidFrameException {
+        int frameSum = this.sumOfBallsInFrame(iteration);
+        if (frameSum > 10 && frameIndex < this.framesNumber) {
+            throw new InvalidFrameException(frameIndex, frameSum);
+        }
+    }
+
+    protected void validateMissingFrames(int frameIndex) throws MissingFrameException {
+        if (frameIndex < this.framesNumber) {
+            throw new MissingFrameException(frameIndex - 1);
+        }
+    }
+
+    protected boolean goToNextFrame(int frameIndex, int rollIndex, int score) {
+        return ((rollIndex == 1 && score == 10) || rollIndex == 2) && frameIndex < this.framesNumber;
+    }
+
+    protected int[] getFrameRoll(int frameIndex, int rollIndex, int score) {
+        if (goToNextFrame(frameIndex, rollIndex, score)) {
+            return new int[] { frameIndex +1 , 0 };
+        }
+        return new int[] { frameIndex, rollIndex };
+    }
+
     public String getScores() {
         int score = 0;
         int frameIndex = 0;
         StringJoiner results = new StringJoiner("\t\t");
         results.add("Score");
         for (int frame = 0; frame < this.framesNumber; frame++) {
+            score = this.accumulateScoreAmongFrames ? score : 0;
             if (isStrike(frameIndex)) {
                 score += 10 + strikeBonus(frameIndex);
                 frameIndex++;

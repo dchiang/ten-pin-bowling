@@ -6,9 +6,15 @@ import java.io.InputStreamReader;
 
 public class ConsoleHandler {
 
+    private ConsoleHandler() {
+    }
+
     public static String readLine() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
-        String input = reader.readLine();
-        return input;
+        return reader.readLine();
+    }
+
+    public static void println(String message) {
+        System.out.println(message);
     }
 }
