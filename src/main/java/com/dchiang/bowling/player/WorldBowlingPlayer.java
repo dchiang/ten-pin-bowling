@@ -3,15 +3,14 @@ package com.dchiang.bowling.player;
 import java.util.List;
 
 import com.dchiang.bowling.exceptions.ExtraScoreException;
-import com.dchiang.bowling.exceptions.InvalidFrameException;
-import com.dchiang.bowling.exceptions.MissingFrameException;
+import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.exceptions.ScoreValueException;
 import com.dchiang.bowling.utils.Validator;
 
 public class WorldBowlingPlayer extends TenPinBowlingPlayer {
 
-    public WorldBowlingPlayer(String name, List<String> rolls) throws Exception {
-        super(name, 10, rolls);
+    public WorldBowlingPlayer(String name, List<String> rolls) throws FileContentException {
+        super(name, 10, rolls, true);
         this.framesNumber = 10;
     }
 
@@ -25,47 +24,48 @@ public class WorldBowlingPlayer extends TenPinBowlingPlayer {
         return 20;
     }
 
-    @Override
-    protected String getRollStringRepresentation(List<String> rolls, int score, int frameIndex, int rollIndexInFrame,
+    private String getRollStringRepresentation(List<String> rolls, int score, int rollIndexInFrame,
             int rollIndex) {
-        return rolls.get(rollIndex).equals("F") ? "F"
-                : (score == 10 ? "\tX"
-                        : (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == 10 ? "/"
-                                : String.valueOf(score)));
+        String representation = rolls.get(rollIndex);
+        if (representation.equals("F")) {
+            return representation;
+        }
+        if (score == 10) {
+            return "\tX";
+        }
+        if (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == 10) {
+            return "/";
+        }
+        return representation;
+    }
+
+    private void validateExtraScore(int rollIndex, int frameIndex, int iteration) throws ExtraScoreException {
+        if (rollIndex == 2 && frameIndex == this.framesNumber && this.isStrike(iteration)) {
+            throw new ExtraScoreException();
+        }
     }
 
     @Override
-    protected void processRolls(List<String> rolls) throws Exception {
+    protected void processRolls(List<String> rolls) throws FileContentException {
         int rollIndex = 0;
         int frameIndex = 1;
         for (int i = 0; i < rolls.size(); i++) {
             rollIndex++;
-            if (rollIndex == 2 && frameIndex == this.framesNumber && this.isStrike(i - 1)) {
-                throw new ExtraScoreException();
-            }
+            validateExtraScore(rollIndex, frameIndex, i - 1);
             if (Validator.hasValidFormat(rolls.get(i), "^([0-9]|10|F){1}$")) {
                 Integer score = rolls.get(i).equals("F") ? 0 : Integer.valueOf(rolls.get(i));
-                rollsString.add(this.getRollStringRepresentation(rolls, score, frameIndex, rollIndex, i));
+                rollsString.add(this.getRollStringRepresentation(rolls, score, rollIndex, i));
                 this.rolls.add(score);
-                if (rollIndex == 1 && score == 10 && frameIndex < this.framesNumber) {
-                    rollIndex = 0;
-                    frameIndex++;
-                } else if (rollIndex == 2) {
-                    int frameSum = this.sumOfBallsInFrame(i - 1);
-                    if (frameSum > 10 && frameIndex < this.framesNumber) {
-                        throw new InvalidFrameException(frameIndex, frameSum);
-                    }
-                    if (frameIndex < this.framesNumber) {
-                        rollIndex = 0;
-                        frameIndex++;
-                    }
+                if (rollIndex == 2) {
+                    this.validateFrameSum(frameIndex, i - 1);
                 }
+                int[] frameRoll = getFrameRoll(frameIndex, rollIndex, score);
+                frameIndex = frameRoll[0];
+                rollIndex = frameRoll[1];
             } else {
                 throw new ScoreValueException(rolls.get(i), (i + 1));
             }
         }
-        if (frameIndex < this.framesNumber) {
-            throw new MissingFrameException(frameIndex - 1);
-        }
+        this.validateMissingFrames(frameIndex);
     }
 }

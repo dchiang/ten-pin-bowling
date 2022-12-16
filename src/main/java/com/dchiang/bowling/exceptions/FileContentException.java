@@ -6,6 +6,7 @@ public class FileContentException extends Exception {
         super(message);
     }
 
+    @Override
     public String toString() {
         return this.getClass().getSimpleName()+ " " + this.getMessage();
     }

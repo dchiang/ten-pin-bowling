@@ -1,6 +1,7 @@
 package com.dchiang.bowling.unit;
 
 import static org.junit.Assert.assertArrayEquals;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNull;
 import static org.junit.Assert.assertTrue;
@@ -14,7 +15,7 @@ import org.junit.Test;
 import com.dchiang.bowling.AppTest;
 import com.dchiang.bowling.utils.FileHandler;
 
-public class FileHandlerTest extends FileHandler {
+public class FileHandlerTest {
 
 
     @Test
@@ -35,7 +36,7 @@ public class FileHandlerTest extends FileHandler {
     }
 
     @Test
-    public void fileNotFoundHandled() throws IOException{
+    public void fileNotFoundHandled() throws IOException {
         String filename = "dummy text";
         assertNull(FileHandler.readFile(filename, "\\t"));
     }
@@ -45,7 +46,7 @@ public class FileHandlerTest extends FileHandler {
         String filename = AppTest.appResourcesPath + "/games.txt";
         List<String[]> records = FileHandler.readFile(filename, "\\t");
         List<String[]> expectedRecords = AppTest.gameMenuOptions;
-        assertTrue(records.size() == expectedRecords.size());
+        assertEquals(records.size(), expectedRecords.size());
         for (int i = 0; i < records.size(); i++) {
             records.get(i);
             assertArrayEquals(records.get(i), expectedRecords.get(i));
@@ -57,7 +58,7 @@ public class FileHandlerTest extends FileHandler {
         String filename = "/games.txt";
         List<String[]> records = FileHandler.readFile(AppTest.class.getResourceAsStream(filename), "\\t");
         List<String[]> expectedRecords = AppTest.gameMenuOptions;
-        assertTrue(records.size() == expectedRecords.size());
+        assertEquals(records.size(), expectedRecords.size());
         for (int i = 0; i < records.size(); i++) {
             records.get(i);
             assertArrayEquals(records.get(i), expectedRecords.get(i));

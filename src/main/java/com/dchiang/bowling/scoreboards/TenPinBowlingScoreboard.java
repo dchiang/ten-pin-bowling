@@ -2,9 +2,9 @@ package com.dchiang.bowling.scoreboards;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.StringJoiner;
 
 import com.dchiang.bowling.exceptions.ExtraScoreException;
@@ -21,31 +21,31 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
     protected ArrayList<BowlingPlayer> players = new ArrayList<>();
     protected LinkedHashMap<String, List<String>> scoreboard = new LinkedHashMap<>();
 
-    protected abstract BowlingPlayer createPlayer(String playerName, List<String> rolls) throws Exception;
+    protected abstract BowlingPlayer createPlayer(String playerName, List<String> rolls) throws FileContentException;
 
     protected String requestScoreFile() throws IOException {
         String scoresPath = null;
         while (scoresPath == null) {
-            System.out.println("Enter the absolute path to the score file:");
+            ConsoleHandler.println("Enter the absolute path to the score file:");
             scoresPath = ConsoleHandler.readLine();
             if (!FileHandler.fileExists(scoresPath)) {
                 scoresPath = null;
-                System.out.println("Not a valid file");
+                ConsoleHandler.println("Not a valid file");
             }
         }
         return scoresPath;
     }
 
-    protected void loadScores(String scoresPath) throws Exception {
+    protected void loadScores(String scoresPath) throws FileContentException {
         List<String[]> records;
         records = FileHandler.readFile(scoresPath, "\\t");
-        if (records != null && records.size() > 0) {
-            for (String[] record : records) {
-                if (record.length != 2) {
+        if (records != null && !records.isEmpty()) {
+            for (String[] line : records) {
+                if (line.length != 2) {
                     throw new FileContentException("Invalid score file, missing column");
                 }
-                String playerName = record[0];
-                String knockedDownPins = record[1];
+                String playerName = line[0];
+                String knockedDownPins = line[1];
                 scoreboard.computeIfAbsent(playerName, k -> new ArrayList<>()).add(knockedDownPins);
             }
         } else {
@@ -53,8 +53,8 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         }
     }
 
-    private void addPlayers() throws Exception {
-        for (HashMap.Entry<String, List<String>> set : scoreboard.entrySet()) {
+    private void addPlayers() throws FileContentException {
+        for (Map.Entry<String, List<String>> set : scoreboard.entrySet()) {
             String playerName = set.getKey();
             List<String> rolls = set.getValue();
             if (Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$")) {
@@ -70,7 +70,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     private void printPlayerScore(BowlingPlayer player) {
         String playerScore = String.join("\n", player.getName(), player.getRollsString(), player.getScores());
-        System.out.println(playerScore);
+        ConsoleHandler.println(playerScore);
     }
 
     private void printScoreboard() {
@@ -79,13 +79,11 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         for (int i = 1; i <= this.framesNumber; i++) {
             frames.add(String.valueOf(i));
         }
-        System.out.println(frames);
-        players.forEach((player) -> {
-            this.printPlayerScore(player);
-        });
+        ConsoleHandler.println(frames.toString());
+        this.players.forEach(this::printPlayerScore);
     }
 
-    public void execute(String scoreFile) throws Exception {
+    public void execute(String scoreFile) throws IOException, FileContentException {
         if (scoreFile == null) {
             while (this.scoreboard.size() == 0) {
                 String scoresPath = this.requestScoreFile();

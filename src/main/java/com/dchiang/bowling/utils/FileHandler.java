@@ -12,6 +12,9 @@ import java.io.FileReader;
 
 public class FileHandler {
 
+    private FileHandler() {
+    }
+
     public static List<String[]> readFile(Object t, String separator) {
         List<String[]> records = null;
         BufferedReader reader = null;
@@ -21,7 +24,7 @@ public class FileHandler {
             } else if (t instanceof InputStream) {
                 reader = new BufferedReader(new InputStreamReader((InputStream) t));
             } else {
-                return null;
+                return records;
             }
             Stream<String> input = reader.lines();
             records = input.map(x -> x.split(separator)).collect(Collectors.toList());

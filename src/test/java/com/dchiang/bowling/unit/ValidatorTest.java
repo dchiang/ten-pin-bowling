@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.dchiang.bowling.utils.Validator;
 
-public class ValidatorTest extends Validator {
+public class ValidatorTest {
 
     @Test
     public void hasValidFormatStringTrueResult() {
