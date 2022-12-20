@@ -30,13 +30,17 @@ public class FileHandler {
             records = input.map(x -> x.split(separator)).collect(Collectors.toList());
             reader.close();
         } catch (IOException e) {
-            System.out.println(e.getClass().getSimpleName() + " Error loading file " + e.getMessage());
+            ConsoleHandler.println(e.getClass().getSimpleName() + " Error loading file " + e.getMessage());
         }
         return records;
     }
 
     public static boolean fileExists(String path) {
         File file = new File(path);
-        return file.isFile() && file.canRead();
+        boolean result = false;
+        if (file.isFile()) {
+            result = file.canRead();
+        }
+        return result;
     }
 }
