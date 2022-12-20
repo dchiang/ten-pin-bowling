@@ -2,6 +2,8 @@ package com.dchiang.bowling.exceptions;
 
 import static org.junit.Assert.assertEquals;
 
+import java.io.File;
+
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.contrib.java.lang.system.SystemOutRule;
@@ -24,6 +26,7 @@ public class TraditionalBowlingExceptionsTest {
     @Test
     @Parameters({
             "/negative/extra-score.txt,ExtraScoreException Extra Score",
+            "/negative/extra-score-spare.txt,ExtraScoreException Extra Score",
             "/negative/all0-extra-score.txt,ExtraScoreException Extra Score",
             "/negative/allF-extra-score.txt,ExtraScoreException Extra Score",
             "/negative/no-bonus-roll-extra-score.txt,ExtraScoreException Extra Score",
@@ -39,5 +42,22 @@ public class TraditionalBowlingExceptionsTest {
     public void testExceptions(String scoreFile, String... expectedOutput) {
         App.main(new String[] { gameSelection, AppTest.testResourcesPath + scoreFile });
         assertEquals(String.join(", ",expectedOutput) + "\n", systemOutRule.getLogWithNormalizedLineSeparator());
+        assertEquals(String.join(", ", expectedOutput) + "\n", systemOutRule.getLogWithNormalizedLineSeparator());
+    }
+
+    @Test
+    public void pathIsNotFile() {
+        File file = new File(AppTest.testResourcesPath);
+        String scoreFile = file.getAbsolutePath();
+        String expectedOutput = "FileNotFoundException Error loading file "
+                + scoreFile + " (Is a directory)\n"
+                + "FileContentException Empty score file\n";
+        App.main(new String[] { gameSelection, scoreFile });
+        // assertEquals(expectedOutput,
+        // systemOutRule.getLogWithNormalizedLineSeparator());
+        // assertEquals(expectedOutput, String.join("\n",logCaptor.getInfoLogs()));
+        // assertEquals(expectedOutput, String.join("\n", logCaptor.getLogs()) + "\n");
+        // assertEquals(String.join(", ", expectedOutput) + "\n", systemOutRule.getLogWithNormalizedLineSeparator());
+        assertEquals(expectedOutput, systemOutRule.getLogWithNormalizedLineSeparator());
     }
 }
