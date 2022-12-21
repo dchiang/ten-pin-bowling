@@ -10,7 +10,7 @@ import com.dchiang.bowling.utils.Validator;
 public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
 
     public TraditionalBowlingPlayer(String name, List<String> rolls) throws FileContentException {
-        super(name, 10, rolls, true);
+        super(name, 10, 21, rolls, true);
     }
 
     @Override

@@ -9,8 +9,8 @@ import com.dchiang.bowling.utils.Validator;
 
 public class VariantBowlingPlayer extends TenPinBowlingPlayer {
 
-    protected VariantBowlingPlayer(String name, int framesNumber, List<String> rolls, boolean accumulateScoreAmongFrames) throws FileContentException {
-        super(name, framesNumber, rolls, accumulateScoreAmongFrames);
+    protected VariantBowlingPlayer(String name, int framesNumber, int maxRolls, List<String> rolls, boolean accumulateScoreAmongFrames) throws FileContentException {
+        super(name, framesNumber, maxRolls, rolls, accumulateScoreAmongFrames);
     }
 
     @Override
