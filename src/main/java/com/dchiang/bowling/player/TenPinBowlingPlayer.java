@@ -4,26 +4,45 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.StringJoiner;
 
+import com.dchiang.bowling.exceptions.ExtraScoreException;
 import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.exceptions.InvalidFrameException;
 import com.dchiang.bowling.exceptions.MissingFrameException;
+import com.dchiang.bowling.utils.Validator;
 
 public abstract class TenPinBowlingPlayer implements BowlingPlayer {
     protected String name;
+    protected int maxRolls;
     protected List<Integer> rolls;
     protected StringJoiner rollsString;
     protected int framesNumber;
     protected boolean accumulateScoreAmongFrames;
 
-    protected TenPinBowlingPlayer(String name, int frameNumbers, List<String> rolls, boolean accumulateScoreAmongFrames)
+    protected TenPinBowlingPlayer(String name, int frameNumbers, int maxRolls, List<String> rolls,
+            boolean accumulateScoreAmongFrames)
             throws FileContentException {
+        validatePlayerName(name);
         this.name = name;
-        this.rolls = new ArrayList<>();
         this.framesNumber = frameNumbers;
+        this.maxRolls = maxRolls;
+        validateRollsAmount(rolls);
+        this.rolls = new ArrayList<>();
         rollsString = new StringJoiner("\t");
         rollsString.add("Pinfalls");
         this.accumulateScoreAmongFrames = accumulateScoreAmongFrames;
         this.processRolls(rolls);
+    }
+
+    private void validatePlayerName(String playerName) throws FileContentException {
+        if (!Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$")) {
+            throw new FileContentException("Invalid player name, found " + playerName);
+        }
+    }
+
+    private void validateRollsAmount(List<String> rolls) throws ExtraScoreException {
+        if (rolls.size() > this.maxRolls) {
+            throw new ExtraScoreException();
+        }
     }
 
     protected abstract int spareBonus(int frameIndex);
@@ -71,7 +90,7 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
 
     protected int[] getFrameRoll(int frameIndex, int rollIndex, int score) {
         if (goToNextFrame(frameIndex, rollIndex, score)) {
-            return new int[] { frameIndex +1 , 0 };
+            return new int[] { frameIndex + 1, 0 };
         }
         return new int[] { frameIndex, rollIndex };
     }

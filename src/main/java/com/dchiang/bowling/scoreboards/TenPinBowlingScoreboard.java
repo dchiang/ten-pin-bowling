@@ -7,17 +7,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.StringJoiner;
 
-import com.dchiang.bowling.exceptions.ExtraScoreException;
 import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.player.BowlingPlayer;
 import com.dchiang.bowling.utils.ConsoleHandler;
 import com.dchiang.bowling.utils.FileHandler;
-import com.dchiang.bowling.utils.Validator;
 
 public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     protected int framesNumber;
-    protected int maxRolls;
     protected ArrayList<BowlingPlayer> players = new ArrayList<>();
     protected LinkedHashMap<String, List<String>> scoreboard = new LinkedHashMap<>();
 
@@ -57,14 +54,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         for (Map.Entry<String, List<String>> set : scoreboard.entrySet()) {
             String playerName = set.getKey();
             List<String> rolls = set.getValue();
-            if (Validator.hasValidFormat(playerName, "^[A-Z]{1}[a-z]+$")) {
-                if (rolls.size() > this.maxRolls) {
-                    throw new ExtraScoreException();
-                }
-                players.add(this.createPlayer(playerName, rolls));
-            } else {
-                throw new FileContentException("Invalid player name, found " + playerName);
-            }
+            players.add(this.createPlayer(playerName, rolls));
         }
     }
 

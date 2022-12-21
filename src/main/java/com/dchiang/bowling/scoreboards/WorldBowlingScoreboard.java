@@ -10,7 +10,6 @@ public class WorldBowlingScoreboard extends TenPinBowlingScoreboard {
 
     public WorldBowlingScoreboard() {
         this.framesNumber = 10;
-        this.maxRolls = framesNumber * 2;
     }
 
     @Override
