@@ -78,161 +78,55 @@ This projects uses 2 types of files:
 
 ## Supported Features
 
-<table border="0">
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-The code should handle the bowling scores rules described in the specs.
-    </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-The program should run from the command-line and take a text file as input.
-    </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
+- [x] The code should handle the bowling scores rules described in the specs.
+- [x] The program should run from the command-line and take a text file as input.
+- [x] The program should read the input text file and parse its content, which should have the results for several players bowling 10 frames each, written according to these guidelines:
 
-The program should read the input text file and parse its content, which should have the results for several players bowling 10 frames each, written according to these guidelines:
+  1.  Each line represents a player and a chance with the subsequent number of pins knocked down.
+  2.  An 'F' indicates a foul on that chance and no pins knocked down (identical for scoring to a roll of 0).
+  3.  The columns in each row are tab-separated.
 
-1.  Each line represents a player and a chance with the subsequent number of pins knocked down.
-2.  An 'F' indicates a foul on that chance and no pins knocked down (identical for scoring to a roll of 0).
-3.  The columns in each row are tab-separated.
+- [x] The program should handle bad input like more than ten throws (i.e., no chance will produce a negative number of knocked down pins or more than 10, etc), invalid score value or incorrect format.
+- [x] The program should output the scoring for the associated game according to these guidelines:
 
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-  The program should handle bad input like more than ten throws (i.e., no chance will produce a negative number of knocked down pins or more than 10, etc), invalid score value or incorrect format.
-    </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
+  1.  For each player, print their name on a separate line before printing that player's pinfalls and score.
+  2.  All values are tab-separated.
+  3.  The output should calculate if a player scores a strike ('X'), a spare ('/') and allow for extra chances in the tenth frame.
 
-The program should output the scoring for the associated game according to these guidelines:
-
-1. For each player, print their name on a separate line before printing that player's pinfalls and score.
-2. All values are tab-separated.
-3. The output should calculate if a player scores a strike ('X'), a spare ('/') and allow for extra chances in the tenth frame.
-
-   </td>
- </tr>
- <tr>
-   <td><input type="checkbox" onClick="return false" checked></td>
-   <td>
-  Handle all possible cases of a game both including a game where all rolls are 0, all rolls are fouls (F) and a perfect game, where all rolls are strikes.
-   </td>
- </tr>
- <tr>
-   <td><input type="checkbox" onClick="return false" checked></td>
-   <td>
-  Unit test: Tests should cover at least the non-trivial classes and methods.
-    </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-  Integration test: At least cover the three main cases: Sample input (2 players), perfect score, zero score.
-    </td>
- </tr>
-</table>
+- [x] Handle all possible cases of a game both including a game where all rolls are 0, all rolls are fouls (F) and a perfect game, where all rolls are strikes.
+- [x] Unit test: Tests should cover at least the non-trivial classes and methods.
+- [x] Integration test: At least cover the three main cases: Sample input (2 players), perfect score, zero score.
 
 ---
 
 ## Bonus Features
 
-<table border="0">
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Use Java 8 streams and lambdas.
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
+- [x] Use Java 8 streams and lambdas.
+- [x] Support variants of the game:
 
-Support variants of the game:
+  - World Bowling
+  - Twelve Frame
 
-- World Bowling
-- Twelve Frame
-
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-The program can handle score files with less frames than needed to complete the game.
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Accept only players name that starts with one capital letter followed by lower case letters only e.g. <code>Carl</code>.
-   </td>
- </tr>
-</table>
+- [x] The program can handle score files with less frames than needed to complete the game.
+- [x] Accept only players name that starts with one capital letter followed by lower case letters only e.g. `Carl`.
 
 ---
 
 ## Considerations Requested and Applied
 
-<table border="0">
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-SRP: Single Responsibility Principle (Classes are self contained. They do the task they need to do and nothing else).
-    </td>
-   </tr>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Liskov’s Substitution Principle: Interfaces (OOP, Swap principle.. Makes the program able to be extended).
-    </td>
-   </tr>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Dependency Inversion Principle: Code should depend on interfaces, no concrete implementations.
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Include well-known libraries and good use of the JDK API.
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Build mechanism (maven, NO IDE). Program compile and run out of the box.
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Readme file explaining how to compile the project, and contain the test text file to check the output.
-   </td>
- </tr>
- <tr>
-    <td><input type="checkbox" onClick="return false" checked></td>
-    <td>
-Project structure: standard Maven project layout, no IDE specific or custom.
-   </td>
- </tr>
-</table>
+- [x] SRP: Single Responsibility Principle (Classes are self contained. They do the task they need to do and nothing else).
+- [x] Liskov’s Substitution Principle: Interfaces (OOP, Swap principle.. Makes the program able to be extended).
+- [x] Dependency Inversion Principle: Code should depend on interfaces, no concrete implementations.
+- [x] Include well-known libraries and good use of the JDK API.
+- [x] Build mechanism (maven, NO IDE). Program compile and run out of the box.
+- [x] Readme file explaining how to compile the project, and contain the test text file to check the output.
+- [x] Project structure: standard Maven project layout, no IDE specific or custom.
 
 ---
 
 ## Developer Notes
 
-I have used test coverage report using [JaCoCo](https://www.eclemma.org/jacoco/ 'Java Code Coverage Library'). To generet the coverage use the command `mvn jacoco:prepare-agent clean package jacoco:report`. To see the results just open the file `/target/site/jacoco/index.html` using any web browser.
+I have used test coverage reports using [JaCoCo](https://www.eclemma.org/jacoco/ 'Java Code Coverage Library'). To generate the coverage report use the command `mvn jacoco:prepare-agent clean package jacoco:report`. To see the results just open the file `/target/site/jacoco/index.html` using any web browser.
 
 I have also used [SonarQube](https://www.sonarqube.org/ "SonarQube's Home Page") for QC. If you have an instance of your own you can use the command `mvn clean package sonar:sonar -Dsonar.login=[your sonarqube authentication token]` to see SonarQube's report in your instance.
 
