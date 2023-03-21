@@ -9,6 +9,8 @@ import com.dchiang.bowling.utils.Validator;
 
 public class VariantBowlingPlayer extends TenPinBowlingPlayer {
 
+    private static final int STRIKE_BONUS = 20;
+
     protected VariantBowlingPlayer(String name, int framesNumber, int maxRolls, List<String> rolls, boolean accumulateScoreAmongFrames) throws FileContentException {
         super(name, framesNumber, maxRolls, rolls, accumulateScoreAmongFrames);
     }
@@ -20,7 +22,7 @@ public class VariantBowlingPlayer extends TenPinBowlingPlayer {
 
     @Override
     protected int strikeBonus(int frameIndex) {
-        return 20;
+        return STRIKE_BONUS;
     }
 
     private String getRollStringRepresentation(List<String> rolls, int score, int rollIndexInFrame,
@@ -29,10 +31,10 @@ public class VariantBowlingPlayer extends TenPinBowlingPlayer {
         if (representation.equals("F")) {
             return representation;
         }
-        if (score == 10) {
+        if (score == TenPinBowlingPlayer.TOTAL_PINS) {
             return "\tX";
         }
-        if (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == 10) {
+        if (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == TenPinBowlingPlayer.TOTAL_PINS) {
             return "/";
         }
         return representation;

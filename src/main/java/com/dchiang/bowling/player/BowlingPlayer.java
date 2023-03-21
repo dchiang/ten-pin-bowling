@@ -6,5 +6,7 @@ public interface BowlingPlayer {
 
     public String getRollsString();
 
+    public int getFramesNumber();
+
     public String getScores();
 }

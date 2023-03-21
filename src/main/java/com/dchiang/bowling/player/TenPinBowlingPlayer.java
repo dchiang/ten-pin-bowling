@@ -17,13 +17,14 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
     protected StringJoiner rollsString;
     protected int framesNumber;
     protected boolean accumulateScoreAmongFrames;
+    static final int TOTAL_PINS = 10;
 
-    protected TenPinBowlingPlayer(String name, int frameNumbers, int maxRolls, List<String> rolls,
+    protected TenPinBowlingPlayer(String name, int framesNumber, int maxRolls, List<String> rolls,
             boolean accumulateScoreAmongFrames)
             throws FileContentException {
         validatePlayerName(name);
         this.name = name;
-        this.framesNumber = frameNumbers;
+        this.framesNumber = framesNumber;
         this.maxRolls = maxRolls;
         validateRollsAmount(rolls);
         this.rolls = new ArrayList<>();
@@ -59,8 +60,12 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
         return rollsString.toString();
     }
 
+    public int getFramesNumber() {
+        return this.framesNumber;
+    }
+
     protected boolean isStrike(int frameIndex) {
-        return rolls.get(frameIndex) == 10;
+        return rolls.get(frameIndex) == TOTAL_PINS;
     }
 
     protected int sumOfBallsInFrame(int frameIndex) {
@@ -68,12 +73,12 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
     }
 
     protected boolean isSpare(int frameIndex) {
-        return rolls.get(frameIndex) + rolls.get(frameIndex + 1) == 10;
+        return rolls.get(frameIndex) + rolls.get(frameIndex + 1) == TOTAL_PINS;
     }
 
     protected void validateFrameSum(int frameIndex, int iteration) throws InvalidFrameException {
         int frameSum = this.sumOfBallsInFrame(iteration);
-        if (frameSum > 10 && frameIndex < this.framesNumber) {
+        if (frameSum > TOTAL_PINS && frameIndex < this.framesNumber) {
             throw new InvalidFrameException(frameIndex, frameSum);
         }
     }
@@ -85,7 +90,7 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
     }
 
     protected boolean goToNextFrame(int frameIndex, int rollIndex, int score) {
-        return ((rollIndex == 1 && score == 10) || rollIndex == 2) && frameIndex < this.framesNumber;
+        return ((rollIndex == 1 && score == TOTAL_PINS) || rollIndex == 2) && frameIndex < this.framesNumber;
     }
 
     protected int[] getFrameRoll(int frameIndex, int rollIndex, int score) {
@@ -103,10 +108,10 @@ public abstract class TenPinBowlingPlayer implements BowlingPlayer {
         for (int frame = 0; frame < this.framesNumber; frame++) {
             score = this.accumulateScoreAmongFrames ? score : 0;
             if (isStrike(frameIndex)) {
-                score += 10 + strikeBonus(frameIndex);
+                score += TOTAL_PINS + strikeBonus(frameIndex);
                 frameIndex++;
             } else if (isSpare(frameIndex)) {
-                score += 10 + spareBonus(frameIndex);
+                score += TOTAL_PINS + spareBonus(frameIndex);
                 frameIndex += 2;
             } else {
                 score += sumOfBallsInFrame(frameIndex);

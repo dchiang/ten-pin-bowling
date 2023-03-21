@@ -14,7 +14,6 @@ import com.dchiang.bowling.utils.FileHandler;
 
 public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
-    protected int framesNumber;
     protected ArrayList<BowlingPlayer> players = new ArrayList<>();
     protected LinkedHashMap<String, List<String>> scoreboard = new LinkedHashMap<>();
 
@@ -66,7 +65,8 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
     private void printScoreboard() {
         StringJoiner frames = new StringJoiner("\t\t");
         frames.add("Frame");
-        for (int i = 1; i <= this.framesNumber; i++) {
+        int framesNumber = this.players.get(0).getFramesNumber();
+        for (int i = 1; i <= framesNumber; i++) {
             frames.add(String.valueOf(i));
         }
         ConsoleHandler.println(frames.toString());

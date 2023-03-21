@@ -9,8 +9,11 @@ import com.dchiang.bowling.utils.Validator;
 
 public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
 
+    private static final int FRAMES_TO_PLAY = 10;
+    private static final int MAX_ROLLS = 21;
+
     public TraditionalBowlingPlayer(String name, List<String> rolls) throws FileContentException {
-        super(name, 10, 21, rolls, true);
+        super(name, FRAMES_TO_PLAY, MAX_ROLLS, rolls, true);
     }
 
     @Override
@@ -29,13 +32,13 @@ public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
         if (representation.equals("F")) {
             return representation;
         }
-        if (score == 10 && frameIndex >= this.framesNumber) {
+        if (score == TenPinBowlingPlayer.TOTAL_PINS && frameIndex >= this.framesNumber) {
             return "X";
         }
-        if (score == 10) {
+        if (score == TenPinBowlingPlayer.TOTAL_PINS) {
             return "\tX";
         }
-        if (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == 10) {
+        if (rollIndexInFrame == 2 && (this.rolls.get(rollIndex - 1) + score) == TenPinBowlingPlayer.TOTAL_PINS) {
             return "/";
         }
         return representation;

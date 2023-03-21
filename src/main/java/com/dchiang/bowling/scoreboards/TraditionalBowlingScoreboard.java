@@ -8,10 +8,6 @@ import com.dchiang.bowling.player.TraditionalBowlingPlayer;
 
 public class TraditionalBowlingScoreboard extends TenPinBowlingScoreboard {
 
-    public TraditionalBowlingScoreboard() {
-        this.framesNumber = 10;
-    }
-
     @Override
     protected BowlingPlayer createPlayer(String playerName, List<String> rolls) throws FileContentException {
         return new TraditionalBowlingPlayer(playerName, rolls);
