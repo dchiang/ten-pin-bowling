@@ -1,9 +1,12 @@
 package com.dchiang.bowling.player;
 
-/** An interface for a bownling player */
+/**
+ * An interface for a bownling player.
+ */
 public interface BowlingPlayer {
 
     /**
+     * Returns the name of the player.
      *
      * @return the name of the player
      */

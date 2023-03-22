@@ -5,7 +5,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 
 /**
- * Wrapper class for I/O operations in the cli
+ * Wrapper class for I/O operations in the cli.
  */
 public class ConsoleHandler {
 
@@ -13,9 +13,10 @@ public class ConsoleHandler {
     }
 
     /**
+     * Reads a line string from the standard input and returns it.
      *
-     * @return a String containing a line of text received through the cli
-     * @throws IOException if failed or interrupted input operations.
+     * @return a string containing a line of text read from standard input
+     * @throws IOException if failed or interrupted input operations
      */
     public static String readLine() throws IOException {
         BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
@@ -23,8 +24,9 @@ public class ConsoleHandler {
     }
 
     /**
+     * Prints a message to the standard output stream in the command line interface.
      *
-     * @param message  the message to be printed in the cli
+     * @param message the message to be printed in the standard output stream
      */
     public static void println(String message) {
         System.out.println(message);

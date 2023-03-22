@@ -15,7 +15,14 @@ import com.dchiang.bowling.utils.Validator;
  */
 public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
 
+    /**
+     * The number of frames to play in a game for a traditional bowling player.
+     */
     private static final int FRAMES_TO_PLAY = 10;
+
+    /**
+     * The maximum number of rolls a traditional bowling player can make in a game.
+     */
     private static final int MAX_ROLLS = 21;
 
     /**

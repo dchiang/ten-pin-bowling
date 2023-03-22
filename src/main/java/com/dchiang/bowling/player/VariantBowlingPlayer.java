@@ -15,11 +15,14 @@ import com.dchiang.bowling.utils.Validator;
  */
 public class VariantBowlingPlayer extends TenPinBowlingPlayer {
 
+    /**
+     * The value of bonus score for a strike in variant bowling.
+     */
     private static final int STRIKE_BONUS = 20;
 
     /**
      * Constructs a VariantBowlingPlayer by invoking the super constructor with the
-     * given parameters
+     * given parameters.
      *
      * @param name                       the name of the player
      * @param framesNumber               the number of frames in the game
@@ -84,7 +87,8 @@ public class VariantBowlingPlayer extends TenPinBowlingPlayer {
     }
 
     /**
-     * Processes the list of rolls performed by the player and updates the player's score.
+     * Processes the list of rolls performed by the player and updates the player's
+     * score.
      *
      * @param rolls the list of all rolls made by the player
      * @throws FileContentException if there is an error with the file content

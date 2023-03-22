@@ -9,7 +9,7 @@ package com.dchiang.bowling.exceptions;
 public class FileContentException extends Exception {
 
     /**
-     * Constructs a FileContentException with a specific message
+     * Constructs a FileContentException with a specific message.
      *
      * @param message the message of the exception to be thrown
      */

@@ -18,38 +18,42 @@ import com.dchiang.bowling.utils.Validator;
 public abstract class TenPinBowlingPlayer implements BowlingPlayer {
 
     /**
-     * Player name
+     * Player name.
      */
     protected String name;
 
     /**
-     * Maximum allowed rolls for the player
+     * Maximum allowed rolls for the player.
      */
     protected int maxRolls;
 
     /**
-     * List of rolls made by the player
+     * List of rolls made by the player.
      */
     protected List<Integer> rolls;
 
     /**
-     * StringJoiner containing string representation of rolls made by the player
+     * StringJoiner containing string representation of rolls made by the player.
      */
     protected StringJoiner rollsString;
 
     /**
-     * Number of frames in the game
+     * Number of frames in the game.
      */
     protected int framesNumber;
 
     /**
-     * Flag indicating whether to accumulate score among frames or not
+     * Flag indicating whether to accumulate score among frames or not.
      */
     protected boolean accumulateScoreAmongFrames;
+
+    /**
+     * Constant representing the total number of pins in a frame.
+     */
     static final int TOTAL_PINS = 10;
 
     /**
-     * Sole constructor. (For invocation by subclass constructors)
+     * Sole constructor. (For invocation by subclass constructors).
      *
      * @param name                       name of the player
      * @param framesNumber               number of frames in the game

@@ -25,6 +25,9 @@ import com.dchiang.bowling.utils.FileHandler;
  */
 public class App {
 
+	/**
+	 * Constant representing the resource file with the game menu options.
+	 */
 	private static final String GAMES_FILE = "/games.txt";
 
 	private static void printGameSelectionMenu(HashMap<Integer, String> gamesMenuOptions) {

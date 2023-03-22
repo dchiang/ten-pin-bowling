@@ -12,7 +12,14 @@ import com.dchiang.bowling.exceptions.FileContentException;
  */
 public class WorldBowlingPlayer extends VariantBowlingPlayer {
 
+    /**
+     * The maximum number of frames that can be played in a game.
+     */
     private static final int FRAMES_TO_PLAY = 10;
+
+    /**
+     * The maximum number of rolls that can be made in a game.
+     */
     private static final int MAX_ROLLS = 20;
 
     /**
@@ -21,7 +28,8 @@ public class WorldBowlingPlayer extends VariantBowlingPlayer {
      *
      * @param name  the name of the player
      * @param rolls the list of rolls made by the player
-     * @throws FileContentException if the content passed in the parameters is not valid
+     * @throws FileContentException if the content passed in the parameters is not
+     *                              valid
      *                              this exceptions is thrown with a descriptive
      *                              message
      */

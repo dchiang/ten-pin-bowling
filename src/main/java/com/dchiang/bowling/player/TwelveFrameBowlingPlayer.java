@@ -11,7 +11,14 @@ import com.dchiang.bowling.exceptions.FileContentException;
  */
 public class TwelveFrameBowlingPlayer extends VariantBowlingPlayer {
 
+    /**
+     * The number of frames to play in a game for a 12-frame bowling player.
+     */
     private static final int FRAMES_TO_PLAY = 12;
+
+    /**
+     * The maximum number of rolls a 12-frame bowling player can make in a game.
+     */
     private static final int MAX_ROLLS = 24;
 
     /**

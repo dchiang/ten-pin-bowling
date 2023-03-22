@@ -22,18 +22,18 @@ import com.dchiang.bowling.utils.FileHandler;
 public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     /**
-     * List of BowlingPlayer objects representing the players in the game
+     * List of BowlingPlayer objects representing the players in the game.
      */
     protected ArrayList<BowlingPlayer> players = new ArrayList<>();
 
     /**
      * Map with player names as keys and a list of rolls as values representing the
-     * game scoreboard
+     * game scoreboard.
      */
     protected LinkedHashMap<String, List<String>> scoreboard = new LinkedHashMap<>();
 
     /**
-     * Abstract method for creating BowlingPlayer objects from player name and rolls
+     * Abstract method for creating BowlingPlayer objects from player name and rolls.
      *
      * @param playerName the name of the player
      * @param rolls      a list of rolls for the player
@@ -44,7 +44,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     /**
      * Prompts the user for the absolute path to the score file, and reads the file
-     * if it exists
+     * if it exists.
      *
      * @return the absolute path to the score file
      * @throws IOException if there is an error reading the file
@@ -64,7 +64,7 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
     /**
      * Loads scores from a file and populates the scoreboard map with player names
-     * as keys and a list of rolls as values
+     * as keys and a list of rolls as values.
      *
      * @param scoresPath the path to the score file
      * @throws FileContentException if there is an error with the file content
