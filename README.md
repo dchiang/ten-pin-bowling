@@ -132,6 +132,12 @@ I have also used [SonarQube](https://www.sonarqube.org/ "SonarQube's Home Page")
 
 SonarQube supports JaCoCo integration. In order to use it, excecute the command `mvn jacoco:prepare-agent clean package jacoco:report sonar:sonar -Dsonar.login=[your sonarqube authentication token]`
 
+For checking code styling without using SonarQube use the command `mvn checkstyle:checkstyle`. Which will create its report in the file `checkstyle.html` inside `./target/site/`
+
+To generate a standalone HTML javadoc of the project use the command `mvn javadoc:javadoc`. Which will create the folder `./target/site/apidocs` where you can look for the `index.html` file to open the javadoc.
+
+To run all the test without using SonarQube run the command `mvn test`
+
 ---
 
 ## Last Sonarqube Quality Gate Status
