@@ -12,6 +12,17 @@ import com.dchiang.bowling.factories.WorldBowlingFactory;
 import com.dchiang.bowling.utils.ConsoleHandler;
 import com.dchiang.bowling.utils.FileHandler;
 
+/**
+ * A ten-pin bowling app that prints the scoreboard of
+ * already played games stored in files.
+ * <p>
+ * Type of ten-pin bownling supported:
+ * <ul>
+ * <li>Traditional Ten Frames Bowling
+ * <li>Twelve Frames Bowling
+ * <li>World Bowling
+ * </ul>
+ */
 public class App {
 
 	private static final String GAMES_FILE = "/games.txt";
@@ -86,6 +97,17 @@ public class App {
 		return game;
 	}
 
+	/**
+	 * Starts the game based on the launch arguments.
+	 * <p>
+	 * If no arguments then starts in interactive mode.
+	 *
+	 * @param args An array of strings containing the launch arguments
+	 *             <ul>
+	 *             <li>number of game option
+	 *             <li>score file
+	 *             </ul>
+	 */
 	public static void main(String[] args) {
 		Integer gameSelection = args.length > 0 ? Integer.valueOf(args[0]) : null;
 		String scoreFile = args.length > 1 ? args[1] : null;

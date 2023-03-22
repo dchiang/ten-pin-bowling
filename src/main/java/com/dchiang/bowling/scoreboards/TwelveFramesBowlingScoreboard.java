@@ -6,8 +6,24 @@ import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.player.BowlingPlayer;
 import com.dchiang.bowling.player.TwelveFrameBowlingPlayer;
 
+/**
+ * Represents the scoreboard of the Twelve Frames Bowling Variant.
+ * <p>
+ * extends {@link TenPinBowlingScoreboard}
+ */
 public class TwelveFramesBowlingScoreboard extends TenPinBowlingScoreboard {
 
+    /**
+     * This method creates a new TwelveFrameBowlingPlayer object by taking playerName
+     * and rolls as parameters and using them to create new TwelveFrameBowlingPlayer
+     * object.
+     *
+     * @param playerName player name to create the player object.
+     * @param rolls      list of roll scores reducing from 10 to 1 frames.
+     * @throws FileContentException if error occurs during reading data from file.
+     * @return a BowlingPlayer type of TwelveFrameBowlingPlayer with playerName and rolls
+     *         as parameters.
+     */
     @Override
     protected BowlingPlayer createPlayer(String playerName, List<String> rolls) throws FileContentException {
         return new TwelveFrameBowlingPlayer(playerName, rolls);

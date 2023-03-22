@@ -12,13 +12,43 @@ import com.dchiang.bowling.player.BowlingPlayer;
 import com.dchiang.bowling.utils.ConsoleHandler;
 import com.dchiang.bowling.utils.FileHandler;
 
+/**
+ * Abstract class that provides default implementations and standard behaviors
+ * of the {@link Scoreboard} interface.
+ * <p>
+ * Subclasses must implement the {@link #createPlayer(String, List)} method to
+ * create BowlingPlayer objects from the loaded scores.
+ */
 public abstract class TenPinBowlingScoreboard implements Scoreboard {
 
+    /**
+     * List of BowlingPlayer objects representing the players in the game
+     */
     protected ArrayList<BowlingPlayer> players = new ArrayList<>();
+
+    /**
+     * Map with player names as keys and a list of rolls as values representing the
+     * game scoreboard
+     */
     protected LinkedHashMap<String, List<String>> scoreboard = new LinkedHashMap<>();
 
+    /**
+     * Abstract method for creating BowlingPlayer objects from player name and rolls
+     *
+     * @param playerName the name of the player
+     * @param rolls      a list of rolls for the player
+     * @return a BowlingPlayer object
+     * @throws FileContentException if there is an error with the file content
+     */
     protected abstract BowlingPlayer createPlayer(String playerName, List<String> rolls) throws FileContentException;
 
+    /**
+     * Prompts the user for the absolute path to the score file, and reads the file
+     * if it exists
+     *
+     * @return the absolute path to the score file
+     * @throws IOException if there is an error reading the file
+     */
     protected String requestScoreFile() throws IOException {
         String scoresPath = null;
         while (scoresPath == null) {
@@ -32,6 +62,13 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         return scoresPath;
     }
 
+    /**
+     * Loads scores from a file and populates the scoreboard map with player names
+     * as keys and a list of rolls as values
+     *
+     * @param scoresPath the path to the score file
+     * @throws FileContentException if there is an error with the file content
+     */
     protected void loadScores(String scoresPath) throws FileContentException {
         List<String[]> records;
         records = FileHandler.readFile(scoresPath, "\\t");
@@ -73,6 +110,16 @@ public abstract class TenPinBowlingScoreboard implements Scoreboard {
         this.players.forEach(this::printPlayerScore);
     }
 
+    /**
+     * Executes the game by loading scores, creating players, and printing the
+     * scoreboard. If a scoreFile is provided, it loads the scores from the file.
+     * Otherwise, it prompts the user for the path to the score file.
+     *
+     * @param scoreFile the path to the score file, or null if the user should input
+     *                  the path
+     * @throws IOException          if there is an error reading the file
+     * @throws FileContentException if there is an error with the file content
+     */
     public void execute(String scoreFile) throws IOException, FileContentException {
         if (scoreFile == null) {
             while (this.scoreboard.size() == 0) {

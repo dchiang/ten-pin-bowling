@@ -10,11 +10,23 @@ import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import java.io.FileReader;
 
+/**
+ * Wrapper class that provides utility methods for file handling operations.
+ */
 public class FileHandler {
 
     private FileHandler() {
     }
 
+    /**
+     * Reads a file from a given path or input stream and returns the records in the
+     * file as a List of String Arrays.
+     *
+     * @param t         file path or input stream of the file to be read
+     * @param separator the separator character to be used to split records in the
+     *                  file
+     * @return a list of String Arrays containing the records in the file
+     */
     public static List<String[]> readFile(Object t, String separator) {
         List<String[]> records = null;
         BufferedReader reader = null;
@@ -35,6 +47,12 @@ public class FileHandler {
         return records;
     }
 
+    /**
+     * Checks if a file exists and is readable at a given path.
+     *
+     * @param path path of the file to be checked
+     * @return true if the file exists and is readable, false otherwise
+     */
     public static boolean fileExists(String path) {
         File file = new File(path);
         boolean result = false;

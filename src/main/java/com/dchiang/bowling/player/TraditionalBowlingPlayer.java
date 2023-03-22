@@ -7,20 +7,50 @@ import com.dchiang.bowling.exceptions.FileContentException;
 import com.dchiang.bowling.exceptions.ScoreValueException;
 import com.dchiang.bowling.utils.Validator;
 
+/**
+ * This class represents a traditional bowling player who plays a game
+ * consisting of 10 frames, with a maximum of 21 rolls.
+ * <p>
+ * extends {@link TenPinBowlingPlayer}
+ */
 public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
 
     private static final int FRAMES_TO_PLAY = 10;
     private static final int MAX_ROLLS = 21;
 
+    /**
+     * Creates a TraditionalBowlingPlayer object with a name and a list of rolls as
+     * strings.
+     *
+     * @param name  the name of the player
+     * @param rolls the list of rolls made by the player
+     * @throws FileContentException if the content passed in the parameters is not
+     *                              valid this exceptions is thrown with a
+     *                              descriptive message
+     */
     public TraditionalBowlingPlayer(String name, List<String> rolls) throws FileContentException {
         super(name, FRAMES_TO_PLAY, MAX_ROLLS, rolls, true);
     }
 
+    /**
+     * Calculates the bonus score for a spare based on the rolls in a traditional
+     * bowling game.
+     *
+     * @param frameIndex the index of the current frame
+     * @return the bonus score for a spare
+     */
     @Override
     protected int spareBonus(int frameIndex) {
         return rolls.get(frameIndex + 2);
     }
 
+    /**
+     * Calculates the bonus score for a strike based on the rolls in a traditional
+     * bowling game.
+     *
+     * @param frameIndex the index of the current frame
+     * @return the bonus score for a strike
+     */
     @Override
     protected int strikeBonus(int frameIndex) {
         return rolls.get(frameIndex + 1) + rolls.get(frameIndex + 2);
@@ -50,6 +80,13 @@ public class TraditionalBowlingPlayer extends TenPinBowlingPlayer {
         }
     }
 
+    /**
+     * Processes each roll made by the player in a traditional bowling game and adds
+     * up the score for each frame.
+     *
+     * @param rolls the list of rolls made by the player
+     * @throws FileContentException if the contents of the file are not valid
+     */
     @Override
     protected void processRolls(List<String> rolls) throws FileContentException {
         int rollIndex = 0;

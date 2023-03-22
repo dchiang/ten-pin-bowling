@@ -37,6 +37,6 @@ public class WorldBowlingScoreExceptionsTest {
     })
     public void testExceptions(String scoreFile, String... expectedOutput) {
         App.main(new String[] { gameSelection, AppTest.testResourcesPath + scoreFile });
-        assertEquals(String.join(", ",expectedOutput) + "\n", systemOutRule.getLogWithNormalizedLineSeparator());
+        assertEquals(String.join(", ", expectedOutput) + "\n", systemOutRule.getLogWithNormalizedLineSeparator());
     }
 }
